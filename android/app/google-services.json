@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "692702509698",
+    "project_id": "ocr-vis-4b00a",
+    "storage_bucket": "ocr-vis-4b00a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692702509698:android:011b302c1c897f6806129b",
+        "android_client_info": {
+          "package_name": "com.example.vehicle_reporting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692702509698-48bdc2fpf0mjcoebd4d7avctq8v2uo84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb-cISApy5PkmbRLMj3jo9RCth9vzM5OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692702509698-48bdc2fpf0mjcoebd4d7avctq8v2uo84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
