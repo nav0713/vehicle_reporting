@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_reporting/admin/admin.dart';
 import 'package:vehicle_reporting/bloc/admin/admin_bloc.dart';
-import 'package:vehicle_reporting/bloc/security/security_bloc.dart';
-import 'package:vehicle_reporting/services.dart/security_services.dart';
-
-import '../../security/security.dart';
 import '../../style.dart';
 import '../shared/home/gradient_background.dart';
 import '../shared/home/header.dart';
@@ -38,23 +33,24 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AdminBloc, AdminState>(
       listener: (context, state) {
-        if(state is AdminLoginPageLoaded){
-          if(!state.success){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-        
-        child: Text("Invalid username or password",style: TextStyle(color: Colors.white),))));
+        if (state is AdminLoginPageLoaded) {
+          if (!state.success) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                backgroundColor: Colors.red,
+                content: Center(
+                    child: Text(
+                  "Invalid username or password",
+                  style: TextStyle(color: Colors.white),
+                ))));
           }
         }
-        if(state is AdminLoggedInState){
-           Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return  BlocProvider(
-                          create: (context) => AdminBloc()..add((LoadLogs())),
-                          child: const AdminScreen()
-                        );
-                      }));
+        if (state is AdminLoggedInState) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (BuildContext context) {
+            return BlocProvider(
+                create: (context) => AdminBloc()..add((LoadLogs())),
+                child: const AdminScreen());
+          }));
         }
         // TODO: implement listener
       },
@@ -138,13 +134,12 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                     Colors.transparent, Colors.white30),
                                 onPressed: () async {
                                   if (formKey.currentState!.saveAndValidate()) {
-                                    context.read<AdminBloc>().add(
-                                        LoginAdmin(
-                                            username: formKey.currentState!
-                                                .value['username'],
-                                            password: formKey.currentState!
-                                                .value['password'],
-                                            type: "admin"));
+                                    context.read<AdminBloc>().add(LoginAdmin(
+                                        username: formKey
+                                            .currentState!.value['username'],
+                                        password: formKey
+                                            .currentState!.value['password'],
+                                        type: "admin"));
                                   }
                                 },
                                 icon: const Icon(FontAwesome5.user_tie),
@@ -170,7 +165,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
         if (state is AdminLoadingState) {
           return const Scaffold(
             body: Center(
-              child:  CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 color: Colors.black,
               ),
             ),

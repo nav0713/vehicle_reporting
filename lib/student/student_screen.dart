@@ -1,17 +1,12 @@
 import 'dart:io';
-
 import 'package:barcode_scan2/barcode_scan2.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:vehicle_reporting/bloc/student/student_bloc.dart';
 import 'package:vehicle_reporting/shared/home/home.dart';
-import 'package:vehicle_reporting/student/ocr_widget.dart';
 import 'package:vehicle_reporting/style.dart';
 import 'package:vehicle_reporting/utils.dart';
 import 'package:image_picker/image_picker.dart';

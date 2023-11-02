@@ -35,7 +35,7 @@ class SecurityServices {
         FirebaseFirestore.instance.collection("vehicle_logs").doc();
     try {
       final owner = await FirebaseFirestore.instance
-          .collection('registered_owner')
+          .collection('registered_vehicle')
           .doc(plateNumber)
           .get();
 
@@ -47,9 +47,9 @@ class SecurityServices {
             plateNumber: plateNumber);
       } else {
         log = VehicleLogs(
-            affiliation: owner.get("affiliation"),
+            affiliation: owner.get("applying_for"),
             datetime: DateTime.now(),
-            ownerName: owner.get('name'),
+            ownerName: owner.get('owner_name'),
             plateNumber: plateNumber);
       }
 

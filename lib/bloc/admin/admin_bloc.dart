@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:vehicle_reporting/model/vehicle.dart';
 import 'package:vehicle_reporting/services.dart/admin_services.dart';
 
 part 'admin_event.dart';
@@ -8,34 +9,57 @@ part 'admin_state.dart';
 class AdminBloc extends Bloc<AdminEvent, AdminState> {
   AdminBloc() : super(AdminInitial()) {
     on<LoadLogin>((event, emit) {
-     emit(const AdminLoginPageLoaded(success: true));
-    });on<LoginAdmin>((event,emit)async{
-  try{
+      emit(const AdminLoginPageLoaded(success: true));
+    });
+    on<LoginAdmin>((event, emit) async {
+      try {
         emit(AdminLoadingState());
-        bool success = await AdminServices.instance.adminLogin(username: event.username, password: event.password, type: event.type);
-        if(success){
+        bool success = await AdminServices.instance.adminLogin(
+            username: event.username,
+            password: event.password,
+            type: event.type);
+        if (success) {
           emit(AdminLoggedInState(success: success));
-        }else{
-          
+        } else {
           emit(AdminLoginPageLoaded(success: success));
-   
         }
-      }catch(e){
+      } catch (e) {
         emit(AdminErrorState(message: e.toString()));
       }
-    }); on<LoadLogs>((event,emit){
+    });
+    on<UpdateRegisterVehicleApproval>((event, emit) async {
+      try {
+        emit(AdminLoadingState());
+        await AdminServices.instance.updateRegistration(vehicle: event.vehicle);
+        emit(RegisteredVehicleApprovaLUpdateState());
+      } catch (e) {
+        emit(AdminErrorState(message: e.toString()));
+      }
+    });
+    on<ViewRegisteredVehicleDetaiils>(((event, emit) {
+      emit(AdminRegisteredVehicleViewingState(vehicle: event.vehicle));
+    }));
+    on<LoadLogs>((event, emit) {
       emit(LogsLoaded());
     });
-    on<ShowAddUserScreen>((event,emit){
+    on<ShowAddUserScreen>((event, emit) {
       emit(AddUserFormLoaded());
-    });on<AddUser>((event,emit)async{
+    });
+    on<AddUser>((event, emit) async {
       emit(AdminLoadingState());
-      try{
-        AdminServices.instance.addUser(name: event.ownerName, affilation: event.affiliation, contact: event.contact, plate: event.plateNumber);
+      try {
+        AdminServices.instance.addUser(
+            name: event.ownerName,
+            affilation: event.affiliation,
+            contact: event.contact,
+            plate: event.plateNumber);
         emit(OwnderAdded());
-      }catch(e){
+      } catch (e) {
         emit(AdminErrorState(message: e.toString()));
       }
+    });
+    on<ViewRegisteredVehicle>((event, emit) {
+      emit(RegisteredVehicleViewingState());
     });
   }
 }

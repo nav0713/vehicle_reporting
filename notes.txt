@@ -1,0 +1,22 @@
+
+      SizedBox(
+                height: 50,
+                width: 200,
+                child: ElevatedButton.icon(
+                    style: mainBtnStyle(
+                        Colors.indigo, Colors.transparent, Colors.white30),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return BlocProvider(
+                            create: (context) => AdminBloc()..add(LoadLogin()),
+                            child: AdminLoginScreen(
+                                deviceHeight: deviceHeight,
+                                deviceWidth: deviceWidth,
+                                title: "Admin Personnel Login",
+                                type: "Admin"));
+                      }));
+                    },
+                    icon: const Icon(FontAwesome5.user_tie),
+                    label: const Text("Administrator")),
+              )

@@ -10,7 +10,6 @@ class StudentServices {
 
   Future<void> reportVehicle(
       {required String plateNumber,
-   
       required String studentId,
       required String url}) async {
     final docUser =
@@ -18,39 +17,36 @@ class StudentServices {
 
     try {
       // ignore: prefer_interpolation_to_compose_strings
-     plateNumber = plateNumber.replaceAll(' ', '');
+      plateNumber = plateNumber.replaceAll(' ', '');
       DocumentSnapshot owner = await FirebaseFirestore.instance
-          .collection('registered_owner')
+          .collection('registered_vehicle')
           .doc(plateNumber.toString().toUpperCase())
           .get();
-          if(owner.exists){
+      if (owner.exists) {
+        final json = {
+          "owner_contact": owner.get('owner_contact'),
+          'owner_affiliation': owner.get('applying_for'),
+          "student_number": studentId,
+          "plate_number": plateNumber,
+          "image_link": url,
+          "datetime": DateTime.now(),
+          "status": false,
+        };
 
-         final json = {
-      "owner_contact":owner.get('contact'),
-      'owner_affiliation':owner.get('affiliation'),
-      "student_number": studentId,
-      "plate_number": plateNumber,
-      "image_link": url,
-      "datetime": DateTime.now(),
-        "status":false,
-      
-    };
-        
-      await docUser.set(json);
-          }else{
-                     final json = {
-      "owner_contact":"N/A",
-      'owner_affiliation':"N/A",
-      "student_number": studentId,
-      "plate_number": plateNumber,
-      "image_link": url,
-      "datetime": DateTime.now(),
-      "status":false,
-    };
-        
-      await docUser.set(json);
-          }
+        await docUser.set(json);
+      } else {
+        final json = {
+          "owner_contact": "N/A",
+          'owner_affiliation': "N/A",
+          "student_number": studentId,
+          "plate_number": plateNumber,
+          "image_link": url,
+          "datetime": DateTime.now(),
+          "status": false,
+        };
 
+        await docUser.set(json);
+      }
     } catch (e) {
       print(e.toString());
       throw e.toString();

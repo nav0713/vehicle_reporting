@@ -53,9 +53,9 @@ class _SecurityState extends State<Security> {
                           });
                         }
                       });
-                    }
-                    ,galleryOntap: (){
-                           pickerImage(source: ImageSource.gallery).then((value) {
+                    },
+                    galleryOntap: () {
+                      pickerImage(source: ImageSource.gallery).then((value) {
                         if (value.isNotEmpty) {
                           imageCropperView(path: value, context: context)
                               .then((newValue) {
@@ -67,8 +67,7 @@ class _SecurityState extends State<Security> {
                           });
                         }
                       });
-                    }
-                    );
+                    });
               },
               icon: const Icon(FontAwesome5.camera)),
           IconButton(
@@ -162,7 +161,7 @@ class _SecurityState extends State<Security> {
                             rows: snapshot.data!.docs.map((e) {
                               var datetime =
                                   (e.get('datetime') as Timestamp).toDate();
-              
+
                               return DataRow(
                                   onLongPress: () async {
                                     final doc = FirebaseFirestore.instance
@@ -211,7 +210,10 @@ class _SecurityState extends State<Security> {
                                           filterQuality: FilterQuality.low,
                                         ))),
                                     DataCell(TextButton(
-                                      child: const Text("call owner"),
+                                      child: const Text(
+                                        "call owner",
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
                                       onPressed: () {
                                         _makePhoneCall(e.get('owner_contact'));
                                       },
